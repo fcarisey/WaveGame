@@ -32,12 +32,11 @@ public class WaveGame extends Canvas implements Runnable{
         this.addKeyListener(new KeyInput(handler));
 
         handler.addObject(new Player(WIDTH/2-32, HEIGHT/2-32, ID.Player));
-        handler.addObject(new BasicEnnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnnemy));
     }
 
     public static float clamp(float var, int min, int max){
-        if (var >= max) return var = max;
-        else if (var <= min) return var = min;
+        if (var >= max) return max;
+        else if (var <= min) return min;
         else return var;
     }
 
@@ -92,7 +91,7 @@ public class WaveGame extends Canvas implements Runnable{
         }
 
         Graphics g = bs.getDrawGraphics();
-        g.setColor(Color.green);
+        g.setColor(new Color(200, 200, 230));
         g.fillRect(0, 0, WIDTH, HEIGHT);
         handler.render(g);
         hud.render(g);

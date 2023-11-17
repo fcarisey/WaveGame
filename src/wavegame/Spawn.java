@@ -14,7 +14,7 @@ public class Spawn {
         this.handler = handler;
         this.hud = hud;
 
-
+        handler.addObject(new BasicEnnemy(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.BasicEnnemy));
     }
 
     public void tick(){
@@ -38,6 +38,9 @@ public class Spawn {
                     break;
                 case 5:
                     handler.addObject(new BossEnnemy(WaveGame.WIDTH / 2 - 64, -60, ID.BossEnnemy, handler));
+                    break;
+                case 6:
+                    handler.addObject(new Heal(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.HEAL));
                     break;
             }
         }
