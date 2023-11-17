@@ -18,6 +18,15 @@ public class WaveGame extends Canvas implements Runnable{
 
     private Random r;
 
+    public enum STATE{
+        Menu,
+        Game,
+        Help,
+        End
+    };
+
+    public static STATE gameState = STATE.Menu;
+
     public WaveGame(){
         new Window(WIDTH, HEIGHT, "Wave Game", this);
         this.requestFocus();
@@ -31,7 +40,10 @@ public class WaveGame extends Canvas implements Runnable{
 
         this.addKeyListener(new KeyInput(handler));
 
-        handler.addObject(new Player(WIDTH/2-32, HEIGHT/2-32, ID.Player));
+        if (gameState == STATE.Game){
+            handler.addObject(new Player(WIDTH/2-32, HEIGHT/2-32, ID.Player));
+            handler.addObject(new BasicEnnemy(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.BasicEnnemy));
+        }
     }
 
     public static float clamp(float var, int min, int max){
@@ -78,8 +90,11 @@ public class WaveGame extends Canvas implements Runnable{
 
     public void tick(){
         handler.tick();
-        hud.tick();
-        spawner.tick();
+
+        if (gameState == STATE.Game){
+            hud.tick();
+            spawner.tick();
+        }
     }
 
     public void render(){
@@ -94,7 +109,10 @@ public class WaveGame extends Canvas implements Runnable{
         g.setColor(new Color(200, 200, 230));
         g.fillRect(0, 0, WIDTH, HEIGHT);
         handler.render(g);
-        hud.render(g);
+
+        if (gameState == STATE.Game)
+            hud.render(g);
+
         g.dispose();
         bs.show();
     }

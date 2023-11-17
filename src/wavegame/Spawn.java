@@ -13,8 +13,6 @@ public class Spawn {
     public Spawn(Handler handler, HUD hud){
         this.handler = handler;
         this.hud = hud;
-
-        handler.addObject(new BasicEnnemy(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.BasicEnnemy));
     }
 
     public void tick(){
