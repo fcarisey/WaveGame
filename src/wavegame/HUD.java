@@ -10,7 +10,6 @@ public class HUD {
     private int level = 1;
     public void tick(){
         HEALTH = (int) WaveGame.clamp(HEALTH, 0, 100);
-        greenValue = (int) WaveGame.clamp(HEALTH, 0, 255);
         greenValue = HEALTH*2;
         score++;
     }
