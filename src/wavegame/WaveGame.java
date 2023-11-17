@@ -18,6 +18,8 @@ public class WaveGame extends Canvas implements Runnable{
 
     private Random r;
 
+    private Menu menu;
+
     public enum STATE{
         Menu,
         Game,
@@ -35,10 +37,11 @@ public class WaveGame extends Canvas implements Runnable{
         r = new Random();
 
         handler = new Handler();
-
         spawner = new Spawn(handler, hud);
+        menu = new Menu(handler);
 
         this.addKeyListener(new KeyInput(handler));
+        this.addMouseListener(menu);
 
         if (gameState == STATE.Game){
             handler.addObject(new Player(WIDTH/2-32, HEIGHT/2-32, ID.Player));
@@ -92,9 +95,11 @@ public class WaveGame extends Canvas implements Runnable{
         handler.tick();
 
         if (gameState == STATE.Game){
+            this.removeMouseListener(menu);
             hud.tick();
             spawner.tick();
-        }
+        } else if (gameState == STATE.Menu || gameState == STATE.Help)
+            menu.tick();
     }
 
     public void render(){
@@ -112,6 +117,8 @@ public class WaveGame extends Canvas implements Runnable{
 
         if (gameState == STATE.Game)
             hud.render(g);
+        else if (gameState == STATE.Menu)
+            menu.render(g);
 
         g.dispose();
         bs.show();
