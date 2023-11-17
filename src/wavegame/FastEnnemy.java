@@ -20,7 +20,7 @@ public class FastEnnemy extends GameObject{
         if (y <= 0 || y >= WaveGame.HEIGHT - 32) velY *= -1;
         if (x <= 0 || x >= WaveGame.WIDTH - 16) velX *= -1;
 
-        WaveGame.handler.addObject(new Trail(x, y, ID.TRAIL, Color.yellow, 16, 16, 0.01f, WaveGame.handler));
+        WaveGame.handler.addObject(new Trail(x, y, ID.TRAIL, Color.yellow, 16, 16, 0.1f, WaveGame.handler));
     }
 
     public void render(Graphics g){
