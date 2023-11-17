@@ -50,6 +50,13 @@ public class Player extends GameObject{
                     HUD.HEALTH -= 8;
                 }
             }
+
+            if (tempObject.getId() == ID.HEAL){
+                if (getBounds().intersects(tempObject.getBounds())){
+                    HUD.HEALTH += 20;
+                    WaveGame.handler.removeObject(tempObject);
+                }
+            }
         }
     }
 
