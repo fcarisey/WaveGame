@@ -13,6 +13,8 @@ public class Spawn {
     public Spawn(Handler handler, HUD hud){
         this.handler = handler;
         this.hud = hud;
+
+
     }
 
     public void tick(){
@@ -31,6 +33,7 @@ public class Spawn {
                     break;
                 case 4:
                     handler.clearEnnemys();
+                    WaveGame.handler.object.remove(1);
                     handler.addObject(new SmartEnnemy(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.SmartEnnemy, handler));
                     break;
                 case 5:
