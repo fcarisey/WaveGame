@@ -10,8 +10,10 @@ public class Handler {
         for (int i = 0; i < object.size(); i++){
             GameObject tempObject = object.get(i);
 
-            if (tempObject.getId() != ID.Player){
-                object.remove(i);
+            if (tempObject.getId() == ID.Player){
+                object.clear();
+                if (WaveGame.gameState != WaveGame.STATE.End)
+                    addObject(new Player((int) tempObject.getX(), (int) tempObject.getY(), ID.Player));
             }
         }
     }

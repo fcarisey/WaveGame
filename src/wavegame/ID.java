@@ -4,6 +4,7 @@ public enum ID {
     HEAL(),
     Player(),
     TRAIL(),
+    MenuParticle(),
     BasicEnnemy(),
     FastEnnemy(),
     SmartEnnemy(),

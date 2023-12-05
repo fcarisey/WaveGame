@@ -30,15 +30,15 @@ public class WaveGame extends Canvas implements Runnable{
     public static STATE gameState = STATE.Menu;
 
     public WaveGame(){
+        hud = new HUD();
+        handler = new Handler();
+        spawner = new Spawn(handler, hud);
+        menu = new Menu(handler, hud);
+
         new Window(WIDTH, HEIGHT, "Wave Game", this);
         this.requestFocus();
 
-        hud = new HUD();
         r = new Random();
-
-        handler = new Handler();
-        spawner = new Spawn(handler, hud);
-        menu = new Menu(handler);
 
         this.addKeyListener(new KeyInput(handler));
         this.addMouseListener(menu);
@@ -85,7 +85,6 @@ public class WaveGame extends Canvas implements Runnable{
 
             if (System.currentTimeMillis() - timer > 1000){
                 timer += 1000;
-                System.out.println("FPS: " + frames);
                 frames = 0;
             }
         }
@@ -98,6 +97,17 @@ public class WaveGame extends Canvas implements Runnable{
             this.removeMouseListener(menu);
             hud.tick();
             spawner.tick();
+
+            if (HUD.HEALTH <= 0){
+                HUD.HEALTH = 100;
+                gameState = STATE.End;
+                handler.clearEnnemys();
+
+                for (int i = 0; i < 20; i++)
+                    handler.addObject(new MenuParticle(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.MenuParticle, handler));
+
+                this.addMouseListener(menu);
+            }
         } else if (gameState == STATE.Menu || gameState == STATE.Help)
             menu.tick();
     }
@@ -113,11 +123,16 @@ public class WaveGame extends Canvas implements Runnable{
         Graphics g = bs.getDrawGraphics();
         g.setColor(new Color(200, 200, 230));
         g.fillRect(0, 0, WIDTH, HEIGHT);
-        handler.render(g);
 
-        if (gameState == STATE.Game)
+        try {
+            handler.render(g);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        if (gameState == STATE.Game){
             hud.render(g);
-        else if (gameState == STATE.Menu)
+        } else if (gameState == STATE.Menu || gameState == STATE.Help || gameState == STATE.End)
             menu.render(g);
 
         g.dispose();
