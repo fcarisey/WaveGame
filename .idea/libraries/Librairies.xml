@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="jinput">
+  <library name="Librairies">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/src/res/jinput.jar!/" />
       <root url="jar://$PROJECT_DIR$/src/res/jogg-0.0.7.jar!/" />

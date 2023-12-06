@@ -5,10 +5,13 @@ import java.awt.event.KeyEvent;
 
 public class KeyInput extends KeyAdapter {
     private Handler handler;
+
+    private WaveGame game;
     private boolean[] keyDown = new boolean[4];
 
-    public KeyInput(Handler handler){
+    public KeyInput(Handler handler, WaveGame game){
         this.handler = handler;
+        this.game = game;
         keyDown[0] = false; // Z
         keyDown[1] = false; // S
         keyDown[2] = false; // Q
@@ -39,6 +42,12 @@ public class KeyInput extends KeyAdapter {
                     tempObject.setVelX(5);
                     keyDown[3] = true;
                 }
+            }
+        }
+
+        if (key == KeyEvent.VK_P){
+            if (WaveGame.gameState == WaveGame.STATE.Game){
+                WaveGame.paused = !WaveGame.paused;
             }
         }
 

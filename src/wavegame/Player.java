@@ -1,10 +1,18 @@
 package wavegame;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Player extends GameObject{
-    public Player(int x, int y, ID id){
+
+    private Handler handler;
+    private BufferedImage player_image;
+    public Player(int x, int y, ID id, Handler handler){
         super(x, y, id);
+        this.handler = handler;
+
+        SpriteSheet ss = new SpriteSheet(WaveGame.sprite_sheet);
+        player_image = ss.grabImage(1, 1, 32, 32);
     }
 
     public Rectangle getBounds(){
@@ -18,7 +26,7 @@ public class Player extends GameObject{
         x = (int) WaveGame.clamp(x, 0, WaveGame.WIDTH - 37);
         y = (int) WaveGame.clamp(y, 0, WaveGame.HEIGHT - 60);
 
-        WaveGame.handler.addObject(new Trail(x, y, ID.TRAIL, Color.blue, 32, 32, 0.15f, WaveGame.handler));
+        // WaveGame.handler.addObject(new Trail(x, y, ID.TRAIL, Color.blue, 32, 32, 0.15f, WaveGame.handler));
 
         collision();
     }
@@ -30,6 +38,12 @@ public class Player extends GameObject{
             if (tempObject.getId() == ID.BasicEnnemy){
                 if (getBounds().intersects(tempObject.getBounds())){
                     HUD.HEALTH -= 3;
+                }
+            }
+
+            if (tempObject.getId() == ID.HardEnnemy){
+                if (getBounds().intersects(tempObject.getBounds())){
+                    HUD.HEALTH -= 4;
                 }
             }
 
@@ -61,7 +75,9 @@ public class Player extends GameObject{
     }
 
     public void render(Graphics g){
-        g.setColor(Color.blue);
-        g.fillRect((int) x, (int) y, 32, 32);
+//        g.setColor(Color.blue);
+//        g.fillRect((int) x, (int) y, 32, 32);
+
+        g.drawImage(player_image, (int) x, (int) y, null);
     }
 }

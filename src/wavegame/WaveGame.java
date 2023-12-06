@@ -4,12 +4,16 @@ package wavegame;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 public class WaveGame extends Canvas implements Runnable{
     public static final int WIDTH = 640, HEIGHT = WIDTH / 12 * 9;
     private Thread thread;
     private boolean running = false;
+
+    public static boolean paused = false;
+
     public static Handler handler;
 
     private HUD hud;
@@ -20,10 +24,15 @@ public class WaveGame extends Canvas implements Runnable{
 
     private Menu menu;
 
+    public int diff = 0;
+
+    public static BufferedImage sprite_sheet;
+
     public enum STATE{
         Menu,
         Game,
         Help,
+        Select,
         End
     };
 
@@ -32,21 +41,28 @@ public class WaveGame extends Canvas implements Runnable{
     public WaveGame(){
         hud = new HUD();
         handler = new Handler();
-        spawner = new Spawn(handler, hud);
-        menu = new Menu(handler, hud);
+        spawner = new Spawn(handler, hud, this);
+        menu = new Menu(handler, hud, this);
 
         new Window(WIDTH, HEIGHT, "Wave Game", this);
         this.requestFocus();
 
         r = new Random();
 
-        this.addKeyListener(new KeyInput(handler));
+        this.addKeyListener(new KeyInput(handler, this));
         this.addMouseListener(menu);
 
         if (gameState == STATE.Game){
-            handler.addObject(new Player(WIDTH/2-32, HEIGHT/2-32, ID.Player));
+            handler.addObject(new Player(WIDTH/2-32, HEIGHT/2-32, ID.Player, handler));
             handler.addObject(new BasicEnnemy(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.BasicEnnemy));
         }
+
+        AudioPlayer.Load();
+        AudioPlayer.getMusic("Music").setVolume(0.5f);
+        AudioPlayer.getMusic("Music").loop();
+
+        BufferedImageLoader loader = new BufferedImageLoader();
+        sprite_sheet = loader.loadImage("Meme.png");
     }
 
     public static float clamp(float var, int min, int max){
@@ -91,25 +107,28 @@ public class WaveGame extends Canvas implements Runnable{
     }
 
     public void tick(){
-        handler.tick();
+        if (!paused)
+            handler.tick();
 
         if (gameState == STATE.Game){
-            this.removeMouseListener(menu);
-            hud.tick();
-            spawner.tick();
+            if (!paused){
+                this.removeMouseListener(menu);
+                hud.tick();
+                spawner.tick();
 
-            if (HUD.HEALTH <= 0){
-                HUD.HEALTH = 100;
-                gameState = STATE.End;
-                handler.clearEnnemys();
-                spawner.setScoreKeep(0);
+                if (HUD.HEALTH <= 0){
+                    HUD.HEALTH = 100;
+                    gameState = STATE.End;
+                    handler.clearEnnemys();
+                    spawner.setScoreKeep(0);
 
-                for (int i = 0; i < 20; i++)
-                    handler.addObject(new MenuParticle(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.MenuParticle, handler));
+                    for (int i = 0; i < 20; i++)
+                        handler.addObject(new MenuParticle(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.MenuParticle, handler));
 
-                this.addMouseListener(menu);
+                    this.addMouseListener(menu);
+                }
             }
-        } else if (gameState == STATE.Menu || gameState == STATE.Help)
+        } else if (gameState == STATE.Menu || gameState == STATE.Help || gameState == STATE.Select)
             menu.tick();
     }
 
@@ -131,9 +150,13 @@ public class WaveGame extends Canvas implements Runnable{
             e.printStackTrace();
         }
 
+        if (paused){
+            g.drawString("Paused", 240, 50);
+        }
+
         if (gameState == STATE.Game){
             hud.render(g);
-        } else if (gameState == STATE.Menu || gameState == STATE.Help || gameState == STATE.End)
+        } else if (gameState == STATE.Menu || gameState == STATE.Help || gameState == STATE.End || gameState == STATE.Select)
             menu.render(g);
 
         g.dispose();
