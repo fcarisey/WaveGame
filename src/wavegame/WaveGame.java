@@ -104,6 +104,8 @@ public class WaveGame extends Canvas implements Runnable{
                 frames = 0;
             }
         }
+
+        stop();
     }
 
     public void tick(){
