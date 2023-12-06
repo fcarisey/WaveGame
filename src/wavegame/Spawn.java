@@ -15,6 +15,10 @@ public class Spawn {
         this.hud = hud;
     }
 
+    public void setScoreKeep(int scoreKeep){
+        this.scoreKeep = scoreKeep;
+    }
+
     public void tick(){
         scoreKeep++;
 

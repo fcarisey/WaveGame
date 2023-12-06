@@ -102,6 +102,7 @@ public class WaveGame extends Canvas implements Runnable{
                 HUD.HEALTH = 100;
                 gameState = STATE.End;
                 handler.clearEnnemys();
+                spawner.setScoreKeep(0);
 
                 for (int i = 0; i < 20; i++)
                     handler.addObject(new MenuParticle(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.MenuParticle, handler));

@@ -85,6 +85,8 @@ public class Menu extends MouseAdapter {
             // Play button
             if (mouseOver(mx, my, 210, 150, 200, 64)){
                 WaveGame.gameState = WaveGame.STATE.Game;
+                hud.setScore(0);
+                hud.setLevel(1);
                 handler.addObject(new Player(WaveGame.WIDTH / 2 - 32, WaveGame.HEIGHT / 2 - 32, ID.Player));
                 handler.clearEnnemys();
                 handler.addObject(new BasicEnnemy(r.nextInt(WaveGame.WIDTH - 50), r.nextInt(WaveGame.HEIGHT - 50), ID.BasicEnnemy));
