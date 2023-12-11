@@ -9,9 +9,7 @@ public class Menu extends MouseAdapter {
 
     private Handler handler;
     private Random r = new Random();
-
     private WaveGame game;
-
     private HUD hud;
 
     public Menu(Handler handler, HUD hud, WaveGame game) {
