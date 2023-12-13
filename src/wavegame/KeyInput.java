@@ -21,25 +21,25 @@ public class KeyInput extends KeyAdapter {
     public void keyPressed(KeyEvent e){
         int key = e.getKeyCode();
 
-        for (int i = 0; i < handler.object.size(); i++){
-            GameObject tempObject = handler.object.get(i);
+        Handler handlerCopy = new Handler();
 
-            if (tempObject.getId() == ID.Player){
-                // Key events for player 1
+        handlerCopy.addAll(this.handler);
+        for (Object object : handlerCopy) {
+            if (object instanceof Player player) {
                 if (key == KeyEvent.VK_Z) {
-                    tempObject.setVelY(-5);
+                    player.setVelY(-5);
                     keyDown[0] = true;
                 }
                 if (key == KeyEvent.VK_S) {
-                    tempObject.setVelY(5);
+                    player.setVelY(5);
                     keyDown[1] = true;
                 }
                 if (key == KeyEvent.VK_Q) {
-                    tempObject.setVelX(-5);
+                    player.setVelX(-5);
                     keyDown[2] = true;
                 }
                 if (key == KeyEvent.VK_D) {
-                    tempObject.setVelX(5);
+                    player.setVelX(5);
                     keyDown[3] = true;
                 }
             }
@@ -57,18 +57,18 @@ public class KeyInput extends KeyAdapter {
     public void keyReleased(KeyEvent e){
         int key = e.getKeyCode();
 
-        for (int i = 0; i < handler.object.size(); i++){
-            GameObject tempObject = handler.object.get(i);
+        Handler handlerCopy = new Handler();
 
-            if (tempObject.getId() == ID.Player){
-                // Key events for player 1
+        handlerCopy.addAll(this.handler);
+        for (Object object : handlerCopy) {
+            if (object instanceof Player player) {
                 if (key == KeyEvent.VK_Z) keyDown[0] = false;
                 if (key == KeyEvent.VK_S) keyDown[1] = false;
                 if (key == KeyEvent.VK_Q) keyDown[2] = false;
                 if (key == KeyEvent.VK_D) keyDown[3] = false;
 
-                if (!keyDown[0] && !keyDown[1]) tempObject.setVelY(0);
-                if (!keyDown[2] && !keyDown[3]) tempObject.setVelX(0);
+                if (!keyDown[0] && !keyDown[1]) player.setVelY(0);
+                if (!keyDown[2] && !keyDown[3]) player.setVelX(0);
             }
         }
     }

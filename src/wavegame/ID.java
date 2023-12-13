@@ -1,7 +1,7 @@
 package wavegame;
 
 public enum ID {
-    HEAL(),
+    Heal(),
     Player(),
     TRAIL(),
     MenuParticle(),

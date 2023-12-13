@@ -1,44 +1,40 @@
 package wavegame;
 
 import java.awt.*;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
-public class Handler {
-    LinkedList<GameObject> object = new LinkedList<>();
+public class Handler extends ArrayList<Object> {
 
     public void clearEnnemys(){
-        for (int i = 0; i < object.size(); i++){
-            GameObject tempObject = object.get(i);
-
-            if (tempObject.getId() == ID.Player){
-                object.clear();
+        for (Object object : this){
+            if (object instanceof Player player){
+                this.clear();
                 if (WaveGame.gameState != WaveGame.STATE.End)
-                    addObject(new Player((int) tempObject.getX(), (int) tempObject.getY(), ID.Player, this));
+                    this.add(new Player((int) player.getX(), (int) player.getY(), ID.Player, this));
+                break;
             }
         }
     }
 
     public void tick(){
-        for (int i = 0; i < object.size(); i++){
-            GameObject tempObject = object.get(i);
+        Handler handlerCopy = new Handler();
 
-            tempObject.tick();
-        }
+        handlerCopy.addAll(this);
+        for (Object object : handlerCopy)
+            if (object instanceof IDrawable drawable)
+                drawable.tick();
     }
 
     public void render(Graphics g){
-        for (int i = 0; i < object.size(); i++){
-            GameObject tempObject = object.get(i);
+        Handler handlerCopy = new Handler();
 
-            tempObject.render(g);
-        }
-    }
-
-    public void addObject(GameObject object){
-        this.object.add(object);
+        handlerCopy.addAll(this);
+        for (Object object : handlerCopy)
+            if (object instanceof IDrawable drawable)
+                drawable.render(g);
     }
 
     public void removeObject(GameObject object){
-        this.object.remove(object);
+        this.remove(object);
     }
 }

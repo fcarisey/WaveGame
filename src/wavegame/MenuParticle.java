@@ -10,7 +10,8 @@ public class MenuParticle extends GameObject{
     private Color col;
     int dir = 0;
     public MenuParticle(int x, int y, ID id, Handler handler){
-        super(x, y, id);this.handler = handler;
+        super(x, y, id);
+        this.handler = handler;
         setVelX(r.nextInt(10) - 5);
         setVelY(r.nextInt(10) - 5);
 
@@ -31,7 +32,7 @@ public class MenuParticle extends GameObject{
         if (y <= 0 || y >= WaveGame.HEIGHT - 32) velY *= -1;
         if (x <= 0 || x >= WaveGame.WIDTH - 16) velX *= -1;
 
-        handler.addObject(new Trail(x, y, ID.TRAIL, col, 3, 3, 0.02f, WaveGame.handler));
+        this.handler.add(new Trail(x, y, ID.TRAIL, col, 3, 3, 0.02f, this.handler));
     }
 
     public void render(Graphics g){

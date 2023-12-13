@@ -40,7 +40,7 @@ public class BossEnnemy extends GameObject{
             velX = (int) WaveGame.clamp(velX, -10, 10);
 
             int spawn = r.nextInt(30);
-            if (spawn == 0) handler.addObject(new BossEnnemyBullet((int) x + 48, (int) y + 48, ID.BasicEnnemy, handler));
+            if (spawn == 0) handler.add(new BossEnnemyBullet((int) x + 48, (int) y + 48, ID.BasicEnnemy, handler));
         }
 
         if (x <= 0 || x >= WaveGame.WIDTH - 96) velX *= -1;

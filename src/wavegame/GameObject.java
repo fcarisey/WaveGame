@@ -2,8 +2,9 @@ package wavegame;
 
 import java.awt.*;
 
-public abstract class GameObject {
+public abstract class GameObject implements IDrawable {
     protected float x, y;
+    protected int width, height;
     protected ID id;
     protected float velX, velY;
 
@@ -33,6 +34,22 @@ public abstract class GameObject {
 
     public float getY(){
         return y;
+    }
+
+    public void setWidth(int width){
+        this.width = width;
+    }
+
+    public int getWidth(){
+        return width;
+    }
+
+    public void setHeight(int height){
+        this.height = height;
+    }
+
+    public int getHeight(){
+        return height;
     }
 
     public void setId(ID id){

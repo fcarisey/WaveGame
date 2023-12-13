@@ -32,39 +32,39 @@ public class Spawn {
             if (game.diff == 0){
                 switch (hud.getLevel()){
                     case 2:
-                        handler.addObject(new BasicEnnemy(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.BasicEnnemy));
+                        handler.add(new BasicEnnemy(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.BasicEnnemy, this.handler));
                         break;
                     case 3:
-                        handler.addObject(new FastEnnemy(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.FastEnnemy));
+                        handler.add(new FastEnnemy(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.FastEnnemy, this.handler));
                         break;
                     case 4:
                         handler.clearEnnemys();
-                        handler.addObject(new SmartEnnemy(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.SmartEnnemy, handler));
+                        handler.add(new SmartEnnemy(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.SmartEnnemy, handler));
                         break;
                     case 5:
-                        handler.addObject(new BossEnnemy(WaveGame.WIDTH / 2 - 64, -60, ID.BossEnnemy, handler));
+                        handler.add(new BossEnnemy(WaveGame.WIDTH / 2 - 64, -60, ID.BossEnnemy, handler));
                         break;
                     case 6:
-                        handler.addObject(new Heal(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.HEAL));
+                        handler.add(new Heal(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.Heal));
                         break;
                 }
             }else if (game.diff == 1){
                 switch (hud.getLevel()){
                     case 2:
-                        handler.addObject(new HardEnnemy(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.HardEnnemy));
+                        handler.add(new HardEnnemy(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.HardEnnemy, handler));
                         break;
                     case 3:
-                        handler.addObject(new FastEnnemy(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.FastEnnemy));
+                        handler.add(new FastEnnemy(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.FastEnnemy, this.handler));
                         break;
                     case 4:
                         handler.clearEnnemys();
-                        handler.addObject(new SmartEnnemy(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.SmartEnnemy, handler));
+                        handler.add(new SmartEnnemy(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.SmartEnnemy, handler));
                         break;
                     case 5:
-                        handler.addObject(new BossEnnemy(WaveGame.WIDTH / 2 - 64, -60, ID.BossEnnemy, handler));
+                        handler.add(new BossEnnemy(WaveGame.WIDTH / 2 - 64, -60, ID.BossEnnemy, handler));
                         break;
                     case 6:
-                        handler.addObject(new Heal(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.HEAL));
+                        handler.add(new Heal(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.Heal));
                         break;
                 }
             }

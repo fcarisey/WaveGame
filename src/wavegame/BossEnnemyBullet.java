@@ -27,7 +27,7 @@ public class BossEnnemyBullet extends GameObject {
 
         if (y >= WaveGame.HEIGHT) handler.removeObject(this);
 
-        handler.addObject(new Trail(x, y, ID.TRAIL, Color.blue, 16, 16, 0.20f, handler));
+        handler.add(new Trail(x, y, ID.TRAIL, Color.blue, 16, 16, 0.20f, handler));
     }
 
     public void render(Graphics g){

@@ -3,8 +3,10 @@ package wavegame;
 import java.awt.*;
 
 public class HardEnnemy extends GameObject{
-    public HardEnnemy(int x, int y, ID id){
+    private Handler handler;
+    public HardEnnemy(int x, int y, ID id, Handler handler){
         super(x, y, id);
+        this.handler = handler;
         setVelX(8);
         setVelY(8);
     }
@@ -20,7 +22,7 @@ public class HardEnnemy extends GameObject{
         if (y <= 0 || y >= WaveGame.HEIGHT - 32) velY *= -1;
         if (x <= 0 || x >= WaveGame.WIDTH - 16) velX *= -1;
 
-        WaveGame.handler.addObject(new Trail(x, y, ID.TRAIL, Color.red, 16, 16, 0.1f, WaveGame.handler));
+        this.handler.add(new Trail(x, y, ID.TRAIL, Color.red, 16, 16, 0.1f, this.handler));
     }
 
     public void render(Graphics g){

@@ -32,43 +32,45 @@ public class Player extends GameObject{
     }
 
     public void collision(){
-        for (int i = 0; i < WaveGame.handler.object.size(); i++){
-            GameObject tempObject = WaveGame.handler.object.get(i);
+        Handler handlerCopy = new Handler();
 
-            if (tempObject.getId() == ID.BasicEnnemy){
-                if (getBounds().intersects(tempObject.getBounds())){
+        handlerCopy.addAll(this.handler);
+        for (Object object : handlerCopy){
+
+            if (object instanceof BasicEnnemy o){
+                if (getBounds().intersects(o.getBounds())){
                     HUD.HEALTH -= 3;
                 }
             }
 
-            if (tempObject.getId() == ID.HardEnnemy){
-                if (getBounds().intersects(tempObject.getBounds())){
-                    HUD.HEALTH -= 4;
-                }
-            }
-
-            if (tempObject.getId() == ID.FastEnnemy){
-                if (getBounds().intersects(tempObject.getBounds())){
+            if (object instanceof FastEnnemy o){
+                if (getBounds().intersects(o.getBounds())){
                     HUD.HEALTH -= 2;
                 }
             }
 
-            if (tempObject.getId() == ID.SmartEnnemy){
-                if (getBounds().intersects(tempObject.getBounds())){
+            if (object instanceof HardEnnemy o){
+                if (getBounds().intersects(o.getBounds())){
+                    HUD.HEALTH -= 4;
+                }
+            }
+
+            if (object instanceof SmartEnnemy o){
+                if (getBounds().intersects(o.getBounds())){
                     HUD.HEALTH -= 1;
                 }
             }
 
-            if (tempObject.getId() == ID.BossEnnemy){
-                if (getBounds().intersects(tempObject.getBounds())){
+            if (object instanceof BossEnnemy o){
+                if (getBounds().intersects(o.getBounds())){
                     HUD.HEALTH -= 8;
                 }
             }
 
-            if (tempObject.getId() == ID.HEAL){
-                if (getBounds().intersects(tempObject.getBounds())){
+            if (object instanceof Heal o){
+                if (getBounds().intersects(o.getBounds())){
                     HUD.HEALTH += 20;
-                    WaveGame.handler.removeObject(tempObject);
+                    this.handler.removeObject(o);
                 }
             }
         }

@@ -5,14 +5,16 @@ import java.awt.*;
 public class SmartEnnemy extends GameObject{
 
     private Handler handler;
-    private GameObject player;
+    private Player player;
     public SmartEnnemy(int x, int y, ID id, Handler handler){
         super(x, y, id);
 
         this.handler = handler;
 
-        for (int i = 0; i < this.handler.object.size(); i++)
-            if (this.handler.object.get(i).getId() == ID.Player) player = this.handler.object.get(i);
+        Handler handlerCopy = new Handler();
+
+        handlerCopy.addAll(this.handler);
+        for (Object o : handlerCopy) if (o instanceof Player player) this.player = player;
     }
 
     public Rectangle getBounds(){
@@ -36,7 +38,7 @@ public class SmartEnnemy extends GameObject{
         if (y <= 0 || y >= WaveGame.HEIGHT - 32) velY *= -1;
         if (x <= 0 || x >= WaveGame.WIDTH - 16) velX *= -1;
 
-        WaveGame.handler.addObject(new Trail(x, y, ID.TRAIL, Color.red, 16, 16, 0.1f, WaveGame.handler));
+        this.handler.add(new Trail(x, y, ID.TRAIL, Color.red, 16, 16, 0.1f, this.handler));
     }
 
     public void render(Graphics g){

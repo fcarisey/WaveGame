@@ -14,7 +14,7 @@ public class WaveGame extends Canvas implements Runnable{
 
     public static boolean paused = false;
 
-    public static Handler handler;
+    public Handler handler;
 
     private HUD hud;
 
@@ -49,17 +49,17 @@ public class WaveGame extends Canvas implements Runnable{
 
         r = new Random();
 
-        this.addKeyListener(new KeyInput(handler, this));
-        this.addMouseListener(menu);
-
-        if (gameState == STATE.Game){
-            handler.addObject(new Player(WIDTH/2-32, HEIGHT/2-32, ID.Player, handler));
-            handler.addObject(new BasicEnnemy(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.BasicEnnemy));
-        }
-
         AudioPlayer.Load();
         AudioPlayer.getMusic("Music").setVolume(0.5f);
         AudioPlayer.getMusic("Music").loop();
+
+        this.addKeyListener(new KeyInput(handler, this));
+        this.addMouseListener(new MouseInput(handler));
+
+        if (gameState == STATE.Game){
+            handler.add(new Player(WIDTH/2-32, HEIGHT/2-32, ID.Player, handler));
+            handler.add(new BasicEnnemy(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.BasicEnnemy, this.handler));
+        }
 
         BufferedImageLoader loader = new BufferedImageLoader();
         sprite_sheet = loader.loadImage("Meme.png");
@@ -114,7 +114,6 @@ public class WaveGame extends Canvas implements Runnable{
 
         if (gameState == STATE.Game){
             if (!paused){
-                this.removeMouseListener(menu);
                 hud.tick();
                 spawner.tick();
 
@@ -125,9 +124,9 @@ public class WaveGame extends Canvas implements Runnable{
                     spawner.setScoreKeep(0);
 
                     for (int i = 0; i < 20; i++)
-                        handler.addObject(new MenuParticle(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.MenuParticle, handler));
+                        handler.add(new MenuParticle(r.nextInt(WaveGame.WIDTH), r.nextInt(WaveGame.HEIGHT), ID.MenuParticle, handler));
 
-                    this.addMouseListener(menu);
+                    menu.end();
                 }
             }
         } else if (gameState == STATE.Menu || gameState == STATE.Help || gameState == STATE.Select)
